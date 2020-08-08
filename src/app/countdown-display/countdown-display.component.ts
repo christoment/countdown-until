@@ -10,11 +10,13 @@ import * as moment from 'moment';
 })
 export class CountdownDisplayComponent implements OnInit, OnDestroy {
   private ngDestroy$ = new Subject();
+  isEdit = false;
 
   @Input() targetTime: Date;
   @Output() deleteTime = new EventEmitter<void>();
 
   timeUntilString: string;
+  isFinished = false;
 
   constructor() { }
 
@@ -28,12 +30,21 @@ export class CountdownDisplayComponent implements OnInit, OnDestroy {
       startWith(),
       takeUntil(this.ngDestroy$),
     ).subscribe(() => {
-      const now = new Date();
-      const deltaHour = Math.abs(this.targetTime.getHours() - now.getHours());
-      const deltaMinute = Math.abs(this.targetTime.getMinutes() - now.getMinutes());
-      const deltaSecond = Math.abs(59 - now.getSeconds());
+      const diff = moment(this.targetTime)
+        .diff(new Date(), 's');
+      const deltaHour = Math.floor(diff / 60 / 60);
+      const deltaMinute = Math.floor((diff / 60) % 60);
+      const deltaSecond = Math.floor(diff % 60);
       const isPast = moment(this.targetTime).isBefore();
-      this.timeUntilString = `${isPast ? '-' : ''}${deltaHour.toString().padStart(2, '0')}:${deltaMinute.toString().padStart(2, '0')}:${deltaSecond.toString().padStart(2, '0')}`;
+
+      if (isPast) {
+        this.timeUntilString = 'Finished';
+        this.isFinished = true;
+        return;
+      }
+
+      this.isFinished = false;
+      this.timeUntilString = `${deltaHour.toString().padStart(2, '0')}:${deltaMinute.toString().padStart(2, '0')}:${deltaSecond.toString().padStart(2, '0')}`;
     });
   }
 

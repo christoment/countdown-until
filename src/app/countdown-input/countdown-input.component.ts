@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CountdownService } from '../services/countdown.service';
 
@@ -8,6 +8,7 @@ import { CountdownService } from '../services/countdown.service';
   styleUrls: ['./countdown-input.component.scss']
 })
 export class CountdownInputComponent implements OnInit {
+  @Input() addLabel = 'Add';
   @Output() add = new EventEmitter<Date>();
 
   formGroup: FormGroup;
