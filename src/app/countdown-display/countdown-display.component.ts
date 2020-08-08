@@ -26,26 +26,31 @@ export class CountdownDisplayComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.updateText();
+
     interval(500).pipe(
-      startWith(),
       takeUntil(this.ngDestroy$),
     ).subscribe(() => {
-      const diff = moment(this.targetTime)
-        .diff(new Date(), 's');
-      const deltaHour = Math.floor(diff / 60 / 60);
-      const deltaMinute = Math.floor((diff / 60) % 60);
-      const deltaSecond = Math.floor(diff % 60);
-      const isPast = moment(this.targetTime).isBefore();
-
-      if (isPast) {
-        this.timeUntilString = 'Finished';
-        this.isFinished = true;
-        return;
-      }
-
-      this.isFinished = false;
-      this.timeUntilString = `${deltaHour.toString().padStart(2, '0')}:${deltaMinute.toString().padStart(2, '0')}:${deltaSecond.toString().padStart(2, '0')}`;
+      this.updateText();
     });
+  }
+
+  private updateText(): void {
+    const diff = moment(this.targetTime)
+      .diff(new Date(), 's');
+    const deltaHour = Math.floor(diff / 60 / 60);
+    const deltaMinute = Math.floor((diff / 60) % 60);
+    const deltaSecond = Math.floor(diff % 60);
+    const isPast = moment(this.targetTime).isBefore();
+
+    if (isPast) {
+      this.timeUntilString = 'Finished';
+      this.isFinished = true;
+      return;
+    }
+
+    this.isFinished = false;
+    this.timeUntilString = `${deltaHour.toString().padStart(2, '0')}:${deltaMinute.toString().padStart(2, '0')}:${deltaSecond.toString().padStart(2, '0')}`;
   }
 
 }

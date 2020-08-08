@@ -10,6 +10,7 @@ import { CountdownService } from '../services/countdown.service';
 export class CountdownInputComponent implements OnInit {
   @Input() addLabel = 'Add';
   @Input() showCancel = false;
+  @Input() initialDate = new Date();;
   @Output() add = new EventEmitter<Date>();
   @Output() cancel = new EventEmitter<Date>();
 
@@ -27,6 +28,12 @@ export class CountdownInputComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.initialDate) {
+      this.formGroup.setValue({
+        hours: this.initialDate.getHours(),
+        minutes: this.initialDate.getMinutes(),
+      });
+    }
   }
 
   submitForm(): void {

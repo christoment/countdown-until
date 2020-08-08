@@ -31,7 +31,16 @@ export class CountdownService {
     const newTimeList = [
       ...this._targetTime.value,
       targetTime,
-    ].sort();
+    ];
+    this.updateList(newTimeList);
+  }
+
+  public changeTargetTime(index: number, targetTime: Date): void {
+    const newTimeList = [
+      ...this._targetTime.value
+        .filter((_, i) => i !== index),
+      targetTime,
+    ];
     this.updateList(newTimeList);
   }
 

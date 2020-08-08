@@ -15,6 +15,8 @@
           class="d-block my-2"
           addLabel="Change"
           [showCancel]="true"
+          [initialDate]="target.date"
+          (add)="changeItem(i, $event) && target.isEdit = false"
           (cancel)="target.isEdit = false"
         ></app-countdown-input>
       </ng-container>
@@ -23,7 +25,7 @@
         <app-countdown-display
           class="d-block my-2"
           (deleteTime)="deleteItem(i)"
-          (editTime)="target.isEdit = !target.isEdit"
+          (editTime)="target.isEdit = true"
           [targetTime]="target.date">
         </app-countdown-display>
       </ng-template>

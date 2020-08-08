@@ -34,4 +34,8 @@ export class AppComponent implements OnInit {
   deleteItem(index: number): void {
     this.countdownService.deleteTargetTimeByIndex(index);
   }
+
+  changeItem(index: number, newDate: Date): void {
+    this.countdownService.changeTargetTime(index, newDate);
+  }
 }
