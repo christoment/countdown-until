@@ -31,7 +31,7 @@ export class CountdownDisplayComponent implements OnInit, OnDestroy {
       const now = new Date();
       const deltaHour = Math.abs(this.targetTime.getHours() - now.getHours());
       const deltaMinute = Math.abs(this.targetTime.getMinutes() - now.getMinutes());
-      const deltaSecond = Math.abs(this.targetTime.getSeconds() - now.getSeconds());
+      const deltaSecond = Math.abs(59 - now.getSeconds());
       const isPast = moment(this.targetTime).isBefore();
       this.timeUntilString = `${isPast ? '-' : ''}${deltaHour.toString().padStart(2, '0')}:${deltaMinute.toString().padStart(2, '0')}:${deltaSecond.toString().padStart(2, '0')}`;
     });

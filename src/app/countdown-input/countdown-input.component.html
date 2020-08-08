@@ -1,28 +1,31 @@
-<form [formGroup]="formGroup" (ngSubmit)="submitForm()">
-  <div class="time-input-container col-6">
-    <div>Add new time</div>
-    <div class="row">
-      <div class="col-4">
-        <label class="d-block">Hours</label>
+<div class="card p-4">
+  <form [formGroup]="formGroup"
+        (ngSubmit)="submitForm()">
+    <div class="time-input-container">
+      <div>Add new time</div>
+      <div class="row">
+        <div class="col-4">
+          <label class="d-block">Hours</label>
+        </div>
+        <div class="col-4">
+          <label class="d-block">Minute</label>
+        </div>
       </div>
-      <div class="col-4">
-        <label class="d-block">Minute</label>
+      <div class="row">
+        <div class="col-4">
+          <input formControlName="hours"
+                 class="form-control"
+                 type="number" min="0" max="23">
+        </div>
+        <div class="col-4">
+          <input formControlName="minutes"
+                 class="form-control"
+                 type="number" min="0" max="59">
+        </div>
+        <div class="col-4">
+          <button class="btn btn-primary" type="submit">Add</button>
+        </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-4">
-        <input formControlName="hours"
-               class="form-control"
-               type="number" min="0" max="23">
-      </div>
-      <div class="col-4">
-        <input formControlName="minutes"
-               class="form-control"
-               type="number" min="0" max="59">
-      </div>
-      <div class="col-4">
-        <button class="btn btn-primary" type="submit">Add</button>
-      </div>
-    </div>
-  </div>
-</form>
+  </form>
+</div>
