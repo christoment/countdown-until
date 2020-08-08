@@ -1,9 +1,16 @@
-<div class="container">
-  <app-countdown-input></app-countdown-input>
+<div class="container my-4">
+  <h1>Countdown Until</h1>
 
-  <ng-container *ngFor="let target of countdownList$ | async; let i = index">
-    <app-countdown-display
-      (deleteTime)="deleteItem(i)"
-      [targetTime]="target"></app-countdown-display>
-  </ng-container>
+  <div class="my-4">
+    <app-countdown-input></app-countdown-input>
+
+    <hr>
+
+    <h4>Running countdown</h4>
+    <ng-container *ngFor="let target of countdownList$ | async; let i = index">
+      <app-countdown-display
+        (deleteTime)="deleteItem(i)"
+        [targetTime]="target"></app-countdown-display>
+    </ng-container>
+  </div>
 </div>

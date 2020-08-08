@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CountdownService } from './services/countdown.service';
 import { Observable } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -8,13 +9,14 @@ import { Observable } from 'rxjs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'countdown-until';
-
   countdownList$: Observable<Date[]>;
 
   constructor(
     private countdownService: CountdownService,
-  ) {}
+    titleService: Title,
+  ) {
+    titleService.setTitle('Countdown Until');
+  }
 
   ngOnInit(): void {
     this.countdownList$ = this.countdownService.getTargetTimeList();
