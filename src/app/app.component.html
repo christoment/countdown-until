@@ -10,9 +10,23 @@
 
     <h4>Running countdown</h4>
     <ng-container *ngFor="let target of countdownList$ | async; let i = index">
-      <app-countdown-display
-        (deleteTime)="deleteItem(i)"
-        [targetTime]="target"></app-countdown-display>
+      <ng-container *ngIf="target.isEdit; else editMode">
+        <app-countdown-input
+          class="d-block my-2"
+          addLabel="Change"
+          [showCancel]="true"
+          (cancel)="target.isEdit = false"
+        ></app-countdown-input>
+      </ng-container>
+
+      <ng-template #editMode>
+        <app-countdown-display
+          class="d-block my-2"
+          (deleteTime)="deleteItem(i)"
+          (editTime)="target.isEdit = !target.isEdit"
+          [targetTime]="target.date">
+        </app-countdown-display>
+      </ng-template>
     </ng-container>
   </div>
 </div>

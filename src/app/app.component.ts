@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CountdownService } from './services/countdown.service';
 import { Observable } from 'rxjs';
 import { Title } from '@angular/platform-browser';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  countdownList$: Observable<Date[]>;
+  countdownList$: Observable<{ date: Date, isEdit?: boolean }[]>;
 
   constructor(
     private countdownService: CountdownService,
@@ -19,7 +20,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.countdownList$ = this.countdownService.getTargetTimeList();
+    this.countdownList$ = this.countdownService.getTargetTimeList().pipe(
+      map((dateList) => {
+        return dateList.map((date) => ({ date, isEdit: false }));
+      }),
+    );
   }
 
   addItem(payload: Date): void {

@@ -9,7 +9,9 @@ import { CountdownService } from '../services/countdown.service';
 })
 export class CountdownInputComponent implements OnInit {
   @Input() addLabel = 'Add';
+  @Input() showCancel = false;
   @Output() add = new EventEmitter<Date>();
+  @Output() cancel = new EventEmitter<Date>();
 
   formGroup: FormGroup;
 

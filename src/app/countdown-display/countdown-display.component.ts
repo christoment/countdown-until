@@ -10,9 +10,9 @@ import * as moment from 'moment';
 })
 export class CountdownDisplayComponent implements OnInit, OnDestroy {
   private ngDestroy$ = new Subject();
-  isEdit = false;
 
   @Input() targetTime: Date;
+  @Output() editTime = new EventEmitter<void>();
   @Output() deleteTime = new EventEmitter<void>();
 
   timeUntilString: string;

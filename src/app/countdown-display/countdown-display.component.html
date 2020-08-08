@@ -1,29 +1,22 @@
-<ng-container *ngIf="isEdit; else readMode">
-  <app-countdown-input
-    addLabel="Change"
-  ></app-countdown-input>
-</ng-container>
-<ng-template #readMode>
-  <div class="card my-2 px-3 py-2 d-flex" [class.text-success]="isFinished">
-    <div class="row align-items-center">
-      <div class="col-8">
-        <div>
-          Time until: {{ targetTime | date: 'HH:mm' }}
-        </div>
-        <div class="display-4">
-          {{ timeUntilString }}
-        </div>
+<div class="card px-3 py-2 d-flex" [class.text-success]="isFinished">
+  <div class="row align-items-center">
+    <div class="col-8">
+      <div>
+        Time until: {{ targetTime | date: 'HH:mm' }}
       </div>
-      <div class="col-4 text-right">
-        <button (click)="deleteTime.emit()"
-                class="btn btn-secondary mr-1">
-          Edit
-        </button>
-        <button (click)="deleteTime.emit()"
-                class="btn btn-danger">
-          Delete
-        </button>
+      <div class="display-4">
+        {{ timeUntilString }}
       </div>
     </div>
+    <div class="col-4 text-right">
+      <button (click)="editTime.emit()"
+              class="btn btn-secondary mr-1 my-1">
+        Edit
+      </button>
+      <button (click)="deleteTime.emit()"
+              class="btn btn-danger my-1">
+        Delete
+      </button>
+    </div>
   </div>
-</ng-template>
+</div>
