@@ -48,6 +48,7 @@ export class CountdownService {
   }
 
   public deleteAllTargetTime(): void {
+    this.saveToList([]);
     this._targetTime.next([]);
   }
 
