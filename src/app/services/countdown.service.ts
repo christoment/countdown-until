@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 const TARGET_TIME = 'targetTime';
 
@@ -17,7 +18,7 @@ export class CountdownService {
       try {
         const savedList = JSON.parse(localStorageString);
         if (Array.isArray(savedList)) {
-          this._targetTime.next(savedList.map(s => new Date(s)));
+          this.updateList(savedList.map(s => new Date(s)));
         }
       } catch (e) {
         console.error('Load from storage failed.', e);
@@ -30,9 +31,8 @@ export class CountdownService {
     const newTimeList = [
       ...this._targetTime.value,
       targetTime,
-    ];
-    this.saveToList(newTimeList);
-    this._targetTime.next(newTimeList);
+    ].sort();
+    this.updateList(newTimeList);
   }
 
   public getTargetTimeList(): Observable<Date[]> {
@@ -41,15 +41,19 @@ export class CountdownService {
 
   public deleteTargetTimeByIndex(index: number): void {
     const newTimeList = [
-      ...this._targetTime.value.filter((_, i) => i !== index),
-    ];
-    this.saveToList(newTimeList);
-    this._targetTime.next(newTimeList);
+      ...this._targetTime.value
+        .filter((_, i) => i !== index),
+    ].sort();
+    this.updateList(newTimeList);
   }
 
   public deleteAllTargetTime(): void {
-    this.saveToList([]);
-    this._targetTime.next([]);
+    this.updateList([]);
+  }
+
+  private updateList(newTimeList: Date[]): void {
+    this._targetTime.next(newTimeList.sort());
+    this.saveToList(newTimeList);
   }
 
   private saveToList(newTimeList: Date[]): void {

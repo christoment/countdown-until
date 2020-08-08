@@ -2,7 +2,9 @@
   <h1>Countdown Until</h1>
 
   <div class="my-4">
-    <app-countdown-input></app-countdown-input>
+    <app-countdown-input
+      (add)="addItem($event)"
+    ></app-countdown-input>
 
     <hr>
 

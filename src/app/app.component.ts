@@ -22,6 +22,10 @@ export class AppComponent implements OnInit {
     this.countdownList$ = this.countdownService.getTargetTimeList();
   }
 
+  addItem(payload: Date): void {
+    this.countdownService.addTargetTime(payload);
+  }
+
   deleteItem(index: number): void {
     this.countdownService.deleteTargetTimeByIndex(index);
   }

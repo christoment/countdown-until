@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CountdownService } from '../services/countdown.service';
 
@@ -8,6 +8,8 @@ import { CountdownService } from '../services/countdown.service';
   styleUrls: ['./countdown-input.component.scss']
 })
 export class CountdownInputComponent implements OnInit {
+  @Output() add = new EventEmitter<Date>();
+
   formGroup: FormGroup;
 
   constructor(
@@ -32,9 +34,10 @@ export class CountdownInputComponent implements OnInit {
     }
 
     const newTargetDate = new Date();
-    const { hours, minutes } = this.formGroup.value;
-    newTargetDate.setHours(hours, minutes, 0, 0);
-    this.countdownService.addTargetTime(newTargetDate);
+    const payload = this.formGroup.value;
+
+    newTargetDate.setHours(payload.hours, payload.minutes, 0, 0);
+    this.add.emit(newTargetDate);
   }
 
 }
