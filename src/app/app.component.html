@@ -8,27 +8,29 @@
 
     <hr>
 
-    <h4>Running countdown</h4>
-    <ng-container *ngFor="let target of countdownList$ | async; let i = index">
-      <ng-container *ngIf="target.isEdit; else editMode">
-        <app-countdown-input
-          class="d-block my-2"
-          addLabel="Change"
-          [showCancel]="true"
-          [initialDate]="target.date"
-          (add)="changeItem(i, $event) && target.isEdit = false"
-          (cancel)="target.isEdit = false"
-        ></app-countdown-input>
-      </ng-container>
+    <ng-container *ngIf="(countdownList$ | async) as countdownList">
+      <h4>Running countdown</h4>
+      <ng-container *ngFor="let target of countdownList; let i = index">
+        <ng-container *ngIf="target.isEdit; else editMode">
+          <app-countdown-input
+            class="d-block my-2"
+            addLabel="Change"
+            [showCancel]="true"
+            [initialDate]="target.date"
+            (add)="changeItem(i, $event) && target.isEdit = false"
+            (cancel)="target.isEdit = false"
+          ></app-countdown-input>
+        </ng-container>
 
-      <ng-template #editMode>
-        <app-countdown-display
-          class="d-block my-2"
-          (deleteTime)="deleteItem(i)"
-          (editTime)="target.isEdit = true"
-          [targetTime]="target.date">
-        </app-countdown-display>
-      </ng-template>
+        <ng-template #editMode>
+          <app-countdown-display
+            class="d-block my-2"
+            (deleteTime)="deleteItem(i)"
+            (editTime)="target.isEdit = true"
+            [targetTime]="target.date">
+          </app-countdown-display>
+        </ng-template>
+      </ng-container>
     </ng-container>
   </div>
 </div>
